@@ -30,7 +30,7 @@
     </head>
     <body>
         <?php
-            require "auth.php";
+            require $page . '.php';
         ?>
     </body>
 </html>
