@@ -9,13 +9,14 @@
 
     require_once './database/functions.php';
 
+    session_start();
+
     $url = (isset($_GET['q'])) ? $_GET['q'] : '';
     $url = rtrim($url, '/');
     $urls = explode('/', $url);
     
     if ($url == '')
     {
-        session_start();
 
         if (empty($_SESSION['auth']))
         {
@@ -39,8 +40,7 @@
                 $_SESSION['auth'] = true;
                 $_SESSION['login'] = $_POST['login'];
 
-                if(setLastSeenByLogin($_POST['login'])) echo 'logged';
-                else echo 'dont work';
+                setLastSeenByLogin($_POST['login']);
                 
                 $page = 'home';
 
@@ -49,6 +49,8 @@
         }
         else if($urls[0] == 'users' || $urls[0] == 'trophy')
         {
+            header('Content-type: application/json; charset=utf-8');
+            
             $method = $_SERVER['REQUEST_METHOD'];
             $formData = getFormData($method);
 

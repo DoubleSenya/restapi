@@ -20,9 +20,9 @@
     {
         $connect = $GLOBALS['connect'];
 
-        $deadTime = date('Y-m-d H:i:s', strtotime('-600 seconds'));
+        $deadTime = date('Y-m-d H:i:s', strtotime('-12000 seconds'));
 
-        $query = "SELECT * FROM users WHERE `last_seen` >= $deadTime";
+        $query = "SELECT * FROM users WHERE `last_seen` >= '$deadTime'";
         $result = mysqli_query($connect, $query);
 
         $users = [];
@@ -76,13 +76,13 @@
         return mysqli_query($connect, $query);
     }
 
-    function delTrophyByUserId($userId)
+    function delTrophyById($id)
     {
         $connect = $GLOBALS['connect'];
 
-        $userId = mysqli_real_escape_string($connect, $userId);
+        $id = mysqli_real_escape_string($connect, $id);
 
-        $query = "DELETE FROM trophies WHERE `user_id` = $userId";
+        $query = "DELETE FROM trophies WHERE `ID` = $id";
 
         return mysqli_query($connect, $query);
     }
@@ -112,8 +112,7 @@
     {
         $connect = $GLOBALS['connect'];
 
-        $query = "UPDATE users SET `last_seen` = NOW() WHERE `login` = $login";
+        $query = "UPDATE users SET `last_seen` = NOW() WHERE `login` = '$login'";
 
-        echo $login;
         return mysqli_query($connect, $query);
     }
